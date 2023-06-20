@@ -10,7 +10,7 @@ Origin is a comprehensive Minecraft API/Framework that provides a wide range of 
 You can easily integrate Origin into your project by following the instructions below.
 
 ### Gradle
-![JitpackVersion](https://jitpack.io/v/Syrent/Origin.svg)
+[![](https://jitpack.io/v/Syrent/Origin.svg)](https://jitpack.io/#Syrent/Origin)
 
 Add the Jitpack repository to your `build.gradle` file:
 

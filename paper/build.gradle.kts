@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "ir.syrent.paper"
-version = "1.0.3"
+version = "1.0.0"
 description = "An experimental API for my minecraft stuff"
 
 publishing {

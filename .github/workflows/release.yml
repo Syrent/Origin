@@ -51,7 +51,9 @@ jobs:
           prerelease: false
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-release-asset@v1
         with:
-          name: Release Artifact
-          path: ./paper/build/libs/
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./paper/build/libs/OriginPaper-${{ steps.extract_version.outputs.version }}.jar
+          asset_name: OriginPaper-${{ steps.extract_version.outputs.version }}.jar
+          asset_content_type: application/java-archive

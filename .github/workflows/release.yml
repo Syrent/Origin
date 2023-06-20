@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Clear Git Credential Cache
+        run: git credential-cache exit
+
       - name: Checkout code
         uses: actions/checkout@v2
 

@@ -11,6 +11,7 @@ You can easily integrate Origin into your project by following the instructions 
 
 ### Gradle
 ![JitpackVersion](https://jitpack.io/v/Syrent/Origin.svg)
+
 Add the Jitpack repository to your `build.gradle` file:
 
 ```gradle

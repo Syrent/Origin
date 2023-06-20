@@ -22,11 +22,10 @@ repositories {
 Add the Origin dependency:
 ```gradle
 dependencies {
-    implementation 'com.github.Syrent:origin-<platform>:Tag'
+    implementation 'com.github.Syrent:Origin:Tag'
 }
 ```
 * Replace Tag with the desired version of Origin.
-* Replace `<platform>` with the desired platform of Origin.
 
 ### Maven
 Add the Jitpack repository to your `pom.xml` file:
@@ -43,12 +42,11 @@ Add the Origin dependency:
 ```xml
 <dependency>
     <groupId>com.github.Syrent</groupId>
-    <artifactId>origin-<platform></artifactId>
+    <artifactId>Origin</artifactId>
     <version>Tag</version>
 </dependency>
 ```
 * Replace Tag with the desired version of Origin.
-* Replace `<platform>` with the desired platform of Origin.
 
 ## Documentation
 All the documentation for Origin is available on the [wiki page](https://github.com/Syrent/Origin/wiki). The wiki contains detailed explanations, tutorials, and examples to help you make the most out of Origin in your Minecraft plugin development.

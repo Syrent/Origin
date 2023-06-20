@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm") version "1.8.21"
-    id("maven-publish")
     application
 }
 
@@ -11,19 +10,7 @@ repositories {
     mavenCentral()
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("OriginPaper") {
-            from(components["java"])
-        }
-    }
 
-    repositories {
-        maven {
-            url = uri("https://jitpack.io")
-        }
-    }
-}
 
 kotlin {
     jvmToolchain(17)

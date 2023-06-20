@@ -3,48 +3,14 @@ import java.net.URL
 import java.util.concurrent.Executors
 
 plugins {
-    `maven-publish`
-    id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.8.21"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.papermc.paperweight.userdev") version "1.5.5"
     id("xyz.jpenilla.run-paper") version "2.1.0"
     id("net.minecrell.plugin-yml.paper") version "0.6.0"
 }
 
-group = "ir.syrent.paper"
-version = "1.0.1"
+group = "ir.syrent"
+version = rootProject.version
 description = "An experimental API for my minecraft stuff"
-
-publishing {
-    publications {
-        create<MavenPublication>("paper") {
-            groupId = project.group.toString()
-            version = project.version.toString()
-            artifactId = rootProject.name
-
-            artifact(rootProject.tasks.shadowJar.get().archiveFile)
-            from(components["java"])
-        }
-    }
-
-    repositories {
-        maven {
-            url = uri("https://jitpack.io")
-        }
-    }
-}
-
-
-repositories {
-    mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/") {
-        name = "papermc-repo"
-    }
-    maven("https://oss.sonatype.org/content/groups/public/") {
-        name = "sonatype"
-    }
-}
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
@@ -52,10 +18,28 @@ dependencies {
     paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT")
 }
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+publishing {
+    publications {
+        register<MavenPublication>("maven") {
+            groupId = project.group.toString()
+            version = project.version.toString()
+            artifactId = rootProject.name
+
+            artifact(rootProject.tasks.shadowJar.get().archiveFile)
+        }
+    }
+
+    publishing {
+        repositories {
+            maven {
+                name = "syrent"
+                url = uri("https://jitpack.io")
+            }
+        }
+    }
 }
 
+tasks.register("prepareKotlinBuildScriptModel") {}
 
 val extraDependencies = emptyMap<String, String>()
 
@@ -68,33 +52,8 @@ tasks {
         dependsOn(reobfJar)
     }
 
-    kotlin {
-        jvmToolchain(17)
-    }
-
-    jar {
-        enabled = false
-    }
-
     shadowJar {
-        archiveClassifier.set("")
-        exclude("META-INF/**")
-        minimize()
         destinationDirectory.set(file("run/plugins"))
-//        archiveFileName.set("OriginPaper-${this.archiveVersion}.jar")
-    }
-
-    compileJava {
-        options.encoding = Charsets.UTF_8.name()
-        options.release.set(17)
-    }
-
-    processResources {
-        filteringCharset = Charsets.UTF_8.name()
-        filesMatching("plugin.yml") {
-            expand("version" to version)
-            expand("description" to description)
-        }
     }
 
     val extraDeps = register("downloadExtraDependencies") {
@@ -117,7 +76,6 @@ tasks {
 
     build {
         dependsOn(extraDeps)
-        dependsOn(shadowJar)
         dependsOn(publishToMavenLocal)
     }
 }

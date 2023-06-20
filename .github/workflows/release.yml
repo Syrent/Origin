@@ -36,11 +36,7 @@ jobs:
         run: echo "::set-output name=version::$(grep -Po '(?<=version=).+' ./paper/gradle.properties)"
 
       - name: Create Tag
-        run: git tag -a -m "Auto-generated tag" ${{ steps.extract_version.outputs.version }}
-        working-directory: ./paper
-
-      - name: Push Tag
-        run: git push origin ${{ steps.extract_version.outputs.version }}
+        run: git tag -a -m "v" ${{ steps.extract_version.outputs.version }}
         working-directory: ./paper
 
       - name: Build and Publish

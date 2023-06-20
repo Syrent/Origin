@@ -40,6 +40,7 @@ jobs:
             Build artifact: ${{ steps.build.outputs.artifact }}
           draft: false
           prerelease: false
+          tag: true
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2

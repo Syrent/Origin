@@ -76,7 +76,8 @@ tasks {
 
     build {
         dependsOn(extraDeps)
-        dependsOn(":paper:publishToMavenLocal")
+        dependsOn(shadowJar)
+        dependsOn(publishToMavenLocal)
     }
 }
 

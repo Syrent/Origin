@@ -21,6 +21,7 @@ jobs:
 
       - name: Build and Publish
         run: ./gradlew clean build publishToMavenLocal
+        working-directory: ./paper
 
       - name: Create Release
         id: create_release

@@ -49,6 +49,10 @@ jobs:
             Build artifact: ${{ steps.build.outputs.artifact }}
           draft: false
           prerelease: false
+          
+      - name: List Directory Contents
+        run: ls -R ./paper/build/libs
+
 
       - name: Upload Artifact
         uses: actions/upload-release-asset@v1

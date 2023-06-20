@@ -3,6 +3,7 @@ import java.net.URL
 import java.util.concurrent.Executors
 
 plugins {
+    `maven-publish`
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.8.21"
     id("com.github.johnrengelman.shadow") version "7.1.2"
@@ -14,6 +15,21 @@ plugins {
 group = "ir.syrent.paper"
 version = "1.0.0"
 description = "An experimental API for my minecraft stuff"
+
+publishing {
+    publications {
+        create<MavenPublication>("OriginPaper") {
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        maven {
+            url = uri("https://jitpack.io")
+        }
+    }
+}
+
 
 repositories {
     mavenCentral()

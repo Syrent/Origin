@@ -22,6 +22,19 @@ jobs:
       - name: Set executable permissions
         run: chmod +x ./gradlew
         working-directory: ./paper
+        
+      - name: Extract Version
+        id: extract_version
+        run: echo "::set-output name=version::$(./gradlew -q printVersion)"
+        working-directory: ./paper
+
+      - name: Create Tag
+        run: git tag -a -m "Auto-generated tag" ${{ steps.extract_version.outputs.version }}
+        working-directory: ./paper
+
+      - name: Push Tag
+        run: git push origin ${{ steps.extract_version.outputs.version }}
+        working-directory: ./paper
 
       - name: Build and Publish
         run: ./gradlew clean build publishToMavenLocal
@@ -40,7 +53,6 @@ jobs:
             Build artifact: ${{ steps.build.outputs.artifact }}
           draft: false
           prerelease: false
-          tag: true
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2

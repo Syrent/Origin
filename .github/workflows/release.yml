@@ -23,10 +23,11 @@ jobs:
         run: chmod +x ./gradlew
         working-directory: ./paper
 
-      - name: Build and Publish
-        run: ./gradlew clean build publishToMavenLocal
-        working-directory: ./paper
-
+      - name: Configure Git
+        run: |
+          git config --global user.email "syrent2356@gmail.com"
+          git config --global user.name "Syrent"
+          
       - name: Extract Version from gradle.properties
         id: extract_version
         run: echo "::set-output name=version::$(grep -Po '(?<=version=).+' ./paper/gradle.properties)"
@@ -37,6 +38,10 @@ jobs:
 
       - name: Push Tag
         run: git push origin ${{ steps.extract_version.outputs.version }}
+        working-directory: ./paper
+
+      - name: Build and Publish
+        run: ./gradlew clean build publishToMavenLocal
         working-directory: ./paper
 
       - name: Create Release

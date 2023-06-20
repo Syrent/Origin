@@ -22,7 +22,7 @@ repositories {
 Add the Origin dependency:
 ```gradle
 dependencies {
-    implementation 'com.github.Syrent:origin-platform:Tag'
+    implementation 'com.github.Syrent:origin-<platform>:Tag'
 }
 ```
 * Replace Tag with the desired version of Origin.

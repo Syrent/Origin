@@ -23,9 +23,9 @@ publishing {
         register<MavenPublication>("maven") {
             groupId = project.group.toString()
             version = project.version.toString()
-            artifactId = rootProject.name
+            artifactId = "origin-paper"
 
-            artifact(rootProject.tasks.shadowJar.get().archiveFile)
+            artifact(tasks.shadowJar.get().archiveFile)
         }
     }
 

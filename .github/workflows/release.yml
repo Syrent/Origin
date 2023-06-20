@@ -26,11 +26,6 @@ jobs:
         run: chmod +x ./gradlew
         working-directory: ./paper
 
-      - name: Configure Git
-        run: |
-          git config --global user.email "syrent2356@gmail.com"
-          git config --global user.name "Syrent"
-          
       - name: Extract Version from gradle.properties
         id: extract_version
         run: echo "::set-output name=version::$(grep -Po '(?<=version=).+' ./paper/gradle.properties)"
@@ -42,6 +37,8 @@ jobs:
       - name: Build and Publish
         run: ./gradlew clean build publishToMavenLocal
         working-directory: ./paper
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release
@@ -61,4 +58,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Release Artifact
-          path: ${{ steps.build.outputs.artifact }}
+          path: ./paper/build/libs/

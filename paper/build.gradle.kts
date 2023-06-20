@@ -13,12 +13,17 @@ plugins {
 }
 
 group = "ir.syrent.paper"
-version = "1.0.0"
+version = "1.0.1"
 description = "An experimental API for my minecraft stuff"
 
 publishing {
     publications {
-        create<MavenPublication>("OriginPaper") {
+        create<MavenPublication>("paper") {
+            groupId = project.group.toString()
+            version = project.version.toString()
+            artifactId = rootProject.name
+
+            artifact(rootProject.tasks.shadowJar.get().archiveFile)
             from(components["java"])
         }
     }
@@ -113,6 +118,7 @@ tasks {
     build {
         dependsOn(extraDeps)
         dependsOn(shadowJar)
+        dependsOn(publishToMavenLocal)
     }
 }
 

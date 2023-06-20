@@ -4,8 +4,8 @@ plugins {
     application
 }
 
-group = "ir.sayandevelopment"
-version = "1.0.0"
+group = "ir.syrent"
+version = "1.0.1"
 
 repositories {
     mavenCentral()

@@ -30,10 +30,6 @@ jobs:
         id: extract_version
         run: echo "::set-output name=version::$(grep -Po '(?<=version=).+' ./paper/gradle.properties)"
 
-      - name: Create Tag
-        run: git tag -a -m "v" ${{ steps.extract_version.outputs.version }}
-        working-directory: ./paper
-
       - name: Build and Publish
         run: ./gradlew clean build publishToMavenLocal
         working-directory: ./paper

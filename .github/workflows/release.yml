@@ -16,13 +16,13 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: '16'
           distribution: 'adopt'
 
       - name: Set executable permissions
         run: chmod +x ./gradlew
         working-directory: ./paper
-        
+
       - name: Build and Publish
         run: ./gradlew clean build publishToMavenLocal
         working-directory: ./paper

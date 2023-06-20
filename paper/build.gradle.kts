@@ -39,7 +39,7 @@ publishing {
     }
 
     tasks.withType<PublishToMavenLocal> {
-        dependsOn(":paper:jar")
+        dependsOn(":paper:shadowJar")
     }
 }
 

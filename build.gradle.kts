@@ -45,7 +45,6 @@ allprojects {
 
     tasks {
         shadowJar {
-            archiveClassifier.set("")
             exclude("META-INF/**")
             minimize()
         }
@@ -77,13 +76,4 @@ allprojects {
             dependsOn(shadowJar)
         }
     }
-}
-
-repositories {
-    mavenCentral()
-}
-
-
-kotlin {
-    jvmToolchain(17)
 }

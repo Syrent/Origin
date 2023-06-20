@@ -37,6 +37,10 @@ publishing {
             }
         }
     }
+
+    tasks.withType<PublishToMavenLocal> {
+        dependsOn(":paper:jar")
+    }
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}
@@ -50,10 +54,6 @@ tasks {
 
     assemble {
         dependsOn(reobfJar)
-    }
-
-    shadowJar {
-        destinationDirectory.set(file("run/plugins"))
     }
 
     val extraDeps = register("downloadExtraDependencies") {
@@ -76,7 +76,7 @@ tasks {
 
     build {
         dependsOn(extraDeps)
-        dependsOn(publishToMavenLocal)
+        dependsOn(":paper:publishToMavenLocal")
     }
 }
 

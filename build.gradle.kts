@@ -83,24 +83,6 @@ repositories {
     mavenCentral()
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("Origin") {
-            groupId = project.group.toString()
-            version = project.version.toString()
-            artifactId = rootProject.name
-
-            from(components["java"])
-        }
-    }
-
-    repositories {
-        maven {
-            url = uri("https://jitpack.io")
-        }
-    }
-}
-
 
 kotlin {
     jvmToolchain(17)

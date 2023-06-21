@@ -8,6 +8,7 @@ import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
+import org.bukkit.inventory.ItemStack
 
 /**
  * Represents a wrapped simple GUI (graphical user interface) in a Paper plugin.
@@ -26,7 +27,7 @@ open class WrappedSimpleGUI(
 ) : SimpleGUI(title, type, size, owner) {
     override fun onOpen(player: Player, inventory: Inventory) {}
 
-    override fun onClick(player: Player, item: GUIItem<Void>, clickType: ClickType): Boolean {
+    override fun onClick(player: Player, item: GUIItem<ItemStack>, clickType: ClickType): Boolean {
         return false
     }
 

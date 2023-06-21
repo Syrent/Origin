@@ -3,6 +3,7 @@ package ir.syrent.origin.paper.gui
 import net.kyori.adventure.text.Component
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.InventoryHolder
+import org.bukkit.inventory.ItemStack
 
 /**
  * Represents a simple GUI (graphical user interface) in a Paper plugin.
@@ -18,4 +19,4 @@ abstract class SimpleGUI(
     type: InventoryType = InventoryType.CHEST,
     size: Int = 54,
     owner: InventoryHolder? = null
-) : GenericGUI<Void>(title, type, size, owner)
+) : GenericGUI<ItemStack>(title, type, size, owner)

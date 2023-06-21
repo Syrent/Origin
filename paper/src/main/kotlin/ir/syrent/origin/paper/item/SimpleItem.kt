@@ -9,4 +9,4 @@ import org.bukkit.inventory.ItemStack
  */
 class SimpleItem(
     itemStack: ItemStack,
-) : Item<Void>(itemStack, null)
+) : Item<ItemStack>(itemStack, null)

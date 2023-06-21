@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack
  * @param itemStack the item stack representing the item
  * @param data additional data associated with the item (optional)
  */
-data class InventoryItem<T>(
+data class GUIItem<T>(
     val slot: Int,
     val itemStack: ItemStack?,
     val data: T? = null

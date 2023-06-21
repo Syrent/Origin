@@ -32,10 +32,14 @@ allprojects {
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://oss.sonatype.org/content/groups/public/")
         maven("https://jitpack.io")
+
+        // Crunch
+        maven("https://redempt.dev")
     }
 
     dependencies {
         compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        implementation("com.github.Redempt:Crunch:1.1.3")
     }
 
     java {

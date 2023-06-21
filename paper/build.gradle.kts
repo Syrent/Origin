@@ -13,9 +13,11 @@ version = rootProject.version
 description = "An experimental API for my minecraft stuff"
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
-
     paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT")
+
+
+    implementation("cloud.commandframework:cloud-paper:1.8.3")
+    implementation("cloud.commandframework:cloud-minecraft-extras:1.8.3")
 }
 
 publishing {
@@ -32,7 +34,7 @@ publishing {
     publishing {
         repositories {
             maven {
-                name = "syrent"
+                name = "Origin"
                 url = uri("https://jitpack.io")
             }
         }

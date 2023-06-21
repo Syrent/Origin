@@ -1,8 +1,10 @@
 package ir.syrent.origin.paper.item
 
 import ir.syrent.origin.paper.Origin
+import ir.syrent.origin.paper.item.interfaces.IItem
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 import java.util.function.BiConsumer
@@ -15,10 +17,10 @@ import java.util.function.Consumer
  * @param itemStack the item stack representing the item
  * @param data additional data associated with the item (optional)
  */
-class OriginItem<T>(
+open class Item<T>(
     val itemStack: ItemStack,
     val data: T? = null
-) : Listener {
+) : IItem<T>, Listener {
 
     /**
      * Initializes the Origin item by registering the necessary event listener.
@@ -28,29 +30,28 @@ class OriginItem<T>(
     }
 
     // Event consumers for item use
-    private var useConsumer: Consumer<ItemStack>? = null
-    private var useBiConsumer: BiConsumer<ItemStack, T?>? = null
+    private var onUseConsumer: Consumer<ItemStack>? = null
+    private var onUseBiConsumer: BiConsumer<ItemStack, T?>? = null
+    private var onActionConsumer: Pair<Action, Consumer<ItemStack>>? = null
+    private var onActionBiConsumer: Pair<Action, BiConsumer<ItemStack, T?>>? = null
 
-    /**
-     * Sets a consumer function to be called when the item is used by a player.
-     *
-     * @param consumer the consumer function to handle the event
-     * @return the OriginItem instance for method chaining
-     */
-    fun onUse(consumer: Consumer<ItemStack>): OriginItem<T> {
-        useConsumer = consumer
+    override fun onUse(consumer: Consumer<ItemStack>): Item<T> {
+        onUseConsumer = consumer
         return this
     }
 
-    /**
-     * Sets a consumer function to be called when the item is used by a player.
-     * The consumer function receives both the item stack and additional data associated with the item.
-     *
-     * @param consumer the consumer function to handle the event
-     * @return the OriginItem instance for method chaining
-     */
-    fun onUse(consumer: BiConsumer<ItemStack, T?>): OriginItem<T> {
-        useBiConsumer = consumer
+    override fun onUse(consumer: BiConsumer<ItemStack, T?>): Item<T> {
+        onUseBiConsumer = consumer
+        return this
+    }
+
+    override fun onAction(action: Action, consumer: Consumer<ItemStack>): Item<T> {
+        onActionConsumer = Pair(action, consumer)
+        return this
+    }
+
+    override fun onAction(action: Action, consumer: BiConsumer<ItemStack, T?>): Item<T> {
+        onActionBiConsumer = Pair(action, consumer)
         return this
     }
 
@@ -64,8 +65,8 @@ class OriginItem<T>(
     private fun onItemUse(event: PlayerInteractEvent) {
         event.item?.let {
             if (it == itemStack) {
-                useConsumer?.accept(it)
-                useBiConsumer?.accept(it, data)
+                onUseConsumer?.accept(it)
+                onUseBiConsumer?.accept(it, data)
             }
         }
     }
@@ -78,8 +79,8 @@ class OriginItem<T>(
          * @receiver the ItemStack to convert
          * @return the created OriginItem instance
          */
-        fun <T> ItemStack.toOriginItem(): OriginItem<T> {
-            return OriginItem(this)
+        fun <T> ItemStack.toOriginItem(): Item<T> {
+            return Item(this)
         }
     }
 }

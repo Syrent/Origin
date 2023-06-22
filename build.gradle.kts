@@ -38,7 +38,7 @@ allprojects {
     }
 
     dependencies {
-        compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         implementation("com.github.Redempt:Crunch:1.1.3")
     }
 

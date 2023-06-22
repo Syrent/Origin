@@ -2,13 +2,22 @@ package ir.syrent.origin.paper
 
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
+import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerJoinEvent
 
 class Origin : OriginPlugin(), Listener {
 
     override fun onEnable() {
         // Plugin startup logic
-        registerListener(this)
+        dataFolder.mkdir()
+        test()
+        registerListener(object : Listener {
+            @EventHandler
+            private fun onPlayerJoin(event: PlayerJoinEvent) {
+                val player = event.player
+            }
+        })
     }
 
     override fun onDisable() {

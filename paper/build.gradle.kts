@@ -25,7 +25,7 @@ publishing {
         register<MavenPublication>("maven") {
             groupId = project.group.toString()
             version = project.version.toString()
-            artifactId = "origin-paper"
+            artifactId = rootProject.name
 
             artifact(tasks.shadowJar.get().archiveFile)
         }
@@ -34,7 +34,7 @@ publishing {
     publishing {
         repositories {
             maven {
-                name = "Origin"
+                name = "syrent"
                 url = uri("https://jitpack.io")
             }
         }

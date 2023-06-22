@@ -10,8 +10,6 @@ class Origin : OriginPlugin(), Listener {
 
     override fun onEnable() {
         // Plugin startup logic
-        dataFolder.mkdir()
-        test()
         registerListener(object : Listener {
             @EventHandler
             private fun onPlayerJoin(event: PlayerJoinEvent) {

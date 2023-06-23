@@ -17,9 +17,8 @@ dependencies {
     paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT")
 
 
-    implementation("cloud.commandframework:cloud-paper:1.8.3")
-    implementation("cloud.commandframework:cloud-minecraft-extras:1.8.3")
-
+    implementation("cloud.commandframework:cloud-paper:1.9.0-SNAPSHOT")
+    implementation("cloud.commandframework:cloud-minecraft-extras:1.9.0-SNAPSHOT")
     implementation("net.kyori:adventure-platform-bukkit:4.3.0")
 }
 
@@ -55,7 +54,7 @@ val extraDependencies = emptyMap<String, String>()
 tasks {
     val relocate = task<ConfigureShadowRelocation>("relocateShadowJar") {
         target = shadowJar.get()
-        prefix = rootProject.gradle.toString()
+        prefix = rootProject.group.toString()
         this.target.apply {
             relocate("net.kyori.", "net.kyori.")
         }
@@ -106,7 +105,7 @@ paper {
     hasOpenClassloader = false
     generateLibrariesJson = true
     foliaSupported = true
-    apiVersion = "1.20"
+    apiVersion = "1.19"
     load = BukkitPluginDescription.PluginLoadOrder.STARTUP
     authors = listOf("Syrent")
     prefix = "Origin-Paper"

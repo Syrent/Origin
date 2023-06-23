@@ -1,6 +1,6 @@
-api-version: "1.20"
+api-version: "1.19"
 name: Origin-Paper
-version: 1.1.1
+version: 1.2.0
 main: ir.syrent.origin.paper.Origin
 description: An experimental API for my minecraft stuff
 load: STARTUP

@@ -23,9 +23,9 @@ abstract class Command(
 
     var ERROR_PREFIX = "<dark_gray>[</dark_gray><dark_red><bold>✘</bold></dark_red><dark_gray>]</dark_gray><gradient:dark_red:red>"
 
-    var manager: PaperCommandManager<ISender>
-    var builder: Command.Builder<ISender>
-    var help: MinecraftHelp<ISender>
+    lateinit var manager: PaperCommandManager<ISender>
+    lateinit var builder: Command.Builder<ISender>
+    lateinit var help: MinecraftHelp<ISender>
 
     init {
         val senderMapper = { commandSender: CommandSender -> Sender(commandSender) }

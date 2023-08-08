@@ -1,9 +1,7 @@
 package ir.syrent.origin.paper.command
 
-import ir.syrent.origin.paper.Origin
 import ir.syrent.origin.paper.command.interfaces.ISender
 import net.kyori.adventure.audience.Audience
-import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.command.CommandSender
@@ -23,7 +21,7 @@ open class Sender(
     }
 
     override fun audience(): Audience {
-        return BukkitAudiences.create(Origin.getPlugin()).sender(commandSender)
+        return Audience.audience(commandSender)
     }
 
     override fun setSender(sender: CommandSender) {

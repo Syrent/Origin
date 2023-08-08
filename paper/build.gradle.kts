@@ -1,4 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 import java.net.URL
 import java.util.concurrent.Executors
@@ -19,7 +18,7 @@ dependencies {
 
     implementation("cloud.commandframework:cloud-paper:1.9.0-SNAPSHOT")
     implementation("cloud.commandframework:cloud-minecraft-extras:1.9.0-SNAPSHOT")
-    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
+//    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
 }
 
 publishing {
@@ -52,16 +51,7 @@ tasks.register("prepareKotlinBuildScriptModel") {}
 val extraDependencies = emptyMap<String, String>()
 
 tasks {
-    val relocate = task<ConfigureShadowRelocation>("relocateShadowJar") {
-        target = shadowJar.get()
-        prefix = rootProject.group.toString()
-        this.target.apply {
-            relocate("net.kyori.", "net.kyori.")
-        }
-    }
-
     shadowJar {
-        dependsOn(relocate)
         archiveClassifier.set("")
         exclude("META-INF/**")
         minimize()

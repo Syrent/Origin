@@ -12,7 +12,7 @@ import ir.syrent.origin.paper.Origin
 import ir.syrent.origin.paper.command.interfaces.ICommand
 import ir.syrent.origin.paper.command.interfaces.ISender
 import ir.syrent.origin.paper.utils.ComponentUtils.component
-import net.kyori.adventure.platform.bukkit.BukkitAudiences
+import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.text.Component
 import org.bukkit.command.CommandSender
 
@@ -30,7 +30,7 @@ abstract class Command(
     init {
         val senderMapper = { commandSender: CommandSender -> Sender(commandSender) }
         val backwardsMapper = { sayanSender: ISender -> sayanSender.getSender() }
-        val audienceMapper = { sayanSender: ISender -> BukkitAudiences.create(Origin.getPlugin()).sender(sayanSender.getSender()) }
+        val audienceMapper = { sayanSender: ISender -> Audience.audience(sayanSender.getSender()) }
 
         manager = PaperCommandManager(
             Origin.getPlugin(),

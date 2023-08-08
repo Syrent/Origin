@@ -21,22 +21,6 @@ dependencies {
 //    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
 }
 
-publishing {
-    publications {
-        register<MavenPublication>("maven") {
-            groupId = project.group.toString()
-            artifactId = rootProject.name
-            version = project.version.toString()
-
-            artifact(tasks.shadowJar.get().archiveFile)
-        }
-    }
-
-    tasks.withType<PublishToMavenLocal> {
-        dependsOn(":paper:shadowJar")
-    }
-}
-
 tasks.register("prepareKotlinBuildScriptModel") {}
 
 val extraDependencies = emptyMap<String, String>()
@@ -76,8 +60,24 @@ tasks {
 
     build {
         dependsOn(extraDeps)
-        dependsOn(shadowJar)
+        dependsOn(publishToMavenLocal)
     }
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("maven") {
+            groupId = project.group.toString()
+            artifactId = rootProject.name
+            version = project.version.toString()
+
+            artifact(tasks.shadowJar.get().archiveFile)
+        }
+    }
+
+    /*tasks.withType<PublishToMavenLocal> {
+        dependsOn(":paper:shadowJar")
+    }*/
 }
 
 paper {

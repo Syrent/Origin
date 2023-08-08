@@ -1,26 +1,32 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
+    }
+}
+
 plugins {
     java
     `java-library`
     `maven-publish`
-    kotlin("jvm") version "1.8.21"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    kotlin("jvm") version "1.9.0"
 }
 
-group = "ir.syrent"
-version = findProperty("version")!!
-
-base {
+/*base {
     archivesName.set(project.name)
-}
+}*/
 
 dependencies {
-    project(":paper").dependencyProject.subprojects {
-        implementation(this)
-    }
+    implementation(project(":paper"))
 }
 
 allprojects {
     apply(plugin = "java")
+    apply(plugin = "java-library")
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
     apply(plugin = "com.github.johnrengelman.shadow")
@@ -38,20 +44,33 @@ allprojects {
     }
 
     dependencies {
+        // Kotlin
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+        // Crunch
         implementation("com.github.Redempt:Crunch:1.1.3")
+
+        // Annotations (included in Spigot jar file)
+        compileOnly("org.jetbrains:annotations:23.0.0")
+
+        // Maven
+        implementation("org.apache.maven:maven-artifact:3.8.5")
     }
 
-    java {
-        withSourcesJar()
-        withJavadocJar()
-        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    configurations.all {
+        exclude(group = "com.mojang", module = "brigadier")
     }
 
     tasks {
         shadowJar {
             exclude("META-INF/**")
             minimize()
+        }
+
+        java {
+            withSourcesJar()
+            withJavadocJar()
+            toolchain.languageVersion.set(JavaLanguageVersion.of(17))
         }
 
         compileKotlin {
@@ -82,3 +101,6 @@ allprojects {
         }
     }
 }
+
+group = "ir.syrent"
+version = findProperty("version")!!

@@ -100,6 +100,19 @@ allprojects {
             dependsOn(shadowJar)
         }
     }
+
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/syrent/origin")
+                credentials {
+                    username = project.findProperty("gpr.user") as String
+                    password = project.findProperty("gpr.key") as String
+                }
+            }
+        }
+    }
 }
 
 group = "ir.syrent"

@@ -4,33 +4,15 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.Server
 import org.bukkit.entity.Player
-import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.scheduler.BukkitTask
 
-class Origin : OriginPlugin(), Listener {
-
-    override fun onEnable() {
-        // Plugin startup logic
-        registerListener(object : Listener {
-            @EventHandler
-            private fun onPlayerJoin(event: PlayerJoinEvent) {
-                val player = event.player
-            }
-        })
-    }
-
-    override fun onDisable() {
-        // Plugin shutdown logic
-    }
-
+class Origin {
     companion object {
-
         private val recordedHasPluginSet = mutableSetOf<String>()
 
         fun registerListener(listener: Listener) {
-            Bukkit.getServer().pluginManager.registerEvents(listener, instance)
+            Bukkit.getServer().pluginManager.registerEvents(listener, OriginPlugin.instance)
         }
 
         fun runSync(runnable: Runnable): BukkitTask {
@@ -58,11 +40,11 @@ class Origin : OriginPlugin(), Listener {
         }
 
         fun getPlugin(): OriginPlugin {
-            return instance
+            return OriginPlugin.instance
         }
 
         fun getServer(): Server {
-            return instance.server
+            return OriginPlugin.instance.server
         }
 
         fun getOnlinePlayers(): Collection<Player> {

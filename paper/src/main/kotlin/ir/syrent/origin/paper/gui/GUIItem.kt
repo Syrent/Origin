@@ -1,6 +1,8 @@
 package ir.syrent.origin.paper.gui
 
+import ir.syrent.origin.paper.Origin
 import org.bukkit.inventory.ItemStack
+import org.bukkit.util.Consumer
 
 /**
  * Represents an item in an inventory for a GUI.
@@ -14,4 +16,14 @@ data class GUIItem<T>(
     val slot: Int,
     val itemStack: ItemStack?,
     val data: T? = null
-)
+) {
+
+    var onClickConsumer: Consumer<GUIItem<T>>? = null
+
+    fun onClick(consumer: Consumer<GUIItem<T>>): GUIItem<T> {
+        onClickConsumer = consumer
+        return this
+    }
+
+
+}

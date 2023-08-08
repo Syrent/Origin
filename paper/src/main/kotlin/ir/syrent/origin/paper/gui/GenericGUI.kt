@@ -14,6 +14,7 @@ import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
+import org.bukkit.util.Consumer
 import java.util.function.BiConsumer
 
 /**
@@ -119,12 +120,24 @@ abstract class GenericGUI<T>(
 
                 var onClick = false
                 items.find { it.slot == event.slot }?.let { inventoryItem ->
-                    Origin.log("Item is null on slot: ${event.slot}")
                     onClickConsumer?.accept(event.whoClicked as? Player, inventoryItem)
                     onClick = onClick(event.whoClicked as Player, inventoryItem, event.click)
                 }
 
                 event.isCancelled = disableClick || onClick
+            }
+
+            @EventHandler
+            private fun onInventoryItemClick(event: InventoryClickEvent) {
+                if (event.inventory != inventory) return
+                if (event.slot < 0) return
+
+
+                items.find { it.slot == event.slot }?.let { inventoryItem ->
+                    inventoryItem.onClickConsumer?.accept(inventoryItem)
+                }
+
+                event.isCancelled = disableClick
             }
 
             @EventHandler

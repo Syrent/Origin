@@ -1,8 +1,9 @@
-name: Publish release
+name: Publish release on push
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - master
 
 jobs:
   publish-release:
@@ -28,16 +29,21 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
       - name: Publish artifact
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
 
-        # The GITHUB_REF tag comes in the format 'refs/tags/xxx'.
-        # So if we split on '/' and take the 3rd value, we can get the release name.
         run: |
-          NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
+          # Generate a new version based on the timestamp or commit hash
+          NEW_VERSION=$(date +%Y%m%d%H%M%S)  # Or use another strategy
           echo "New version: ${NEW_VERSION}"
-          echo "Github username: ${GITHUB_ACTOR}"
+
+          # Print the GitHub username of the actor triggering the workflow
+          echo "GitHub username: ${GITHUB_ACTOR}"
+
+          # Run the Gradle task to publish the artifact
           ./gradlew -Pversion=${NEW_VERSION} publish
+

@@ -113,22 +113,16 @@ abstract class GenericGUI<T>(
         val listener = object : Listener {
             @EventHandler
             private fun onInventoryClick(event: InventoryClickEvent) {
-                Origin.log("Clicked")
                 if (event.inventory != inventory) return
-                Origin.log("Same inventory")
                 if (event.slot < 0) return
-                Origin.log("Slot is not smaller than 0 (slot: ${event.slot})")
 
 
                 var onClick = false
-                Origin.log("items: ${items}")
-                items.getOrNull(event.slot)?.let { inventoryItem ->
+                items.find { it.slot == event.slot }?.let { inventoryItem ->
                     Origin.log("Item is null on slot: ${event.slot}")
                     onClickConsumer?.accept(event.whoClicked as? Player, inventoryItem)
                     onClick = onClick(event.whoClicked as Player, inventoryItem, event.click)
                 }
-                Origin.log("disableClick: ${disableClick}")
-                Origin.log("onClick: ${onClick}")
 
                 event.isCancelled = disableClick || onClick
             }

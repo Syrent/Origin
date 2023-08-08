@@ -9,6 +9,7 @@ open class OriginPlugin : JavaPlugin() {
     }
 
     companion object {
+        @JvmStatic
         lateinit var instance: OriginPlugin
     }
 }

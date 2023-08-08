@@ -92,21 +92,25 @@ abstract class GenericGUI<T>(
     private var onCloseConsumer: BiConsumer<Player?, Inventory>? = null
 
     override fun onOpen(consumer: BiConsumer<Player?, Inventory>): GenericGUI<T> {
+        Origin.log("Called onOpen consumer")
         onOpenConsumer = consumer
         return this
     }
 
     override fun onClick(consumer: BiConsumer<Player?, GUIItem<T>>): GenericGUI<T> {
+        Origin.log("Called onClick consumer")
         onClickConsumer = consumer
         return this
     }
 
     override fun onClose(consumer: BiConsumer<Player?, Inventory>): GenericGUI<T> {
+        Origin.log("Called onClose consumer")
         onCloseConsumer = consumer
         return this
     }
 
     override fun disableClick(disableClick: Boolean): GenericGUI<T> {
+        Origin.log("Called disableClick method")
         this.disableClick = disableClick
         return this
     }
@@ -115,9 +119,11 @@ abstract class GenericGUI<T>(
      * Registers the necessary event listeners for the GUI.
      */
     private fun registerListener() {
+        Origin.log("Registering listener")
         val listener = object : Listener {
             @EventHandler
             private fun onInventoryClick(event: InventoryClickEvent) {
+                Origin.log("Origin onInventoryClick listener")
                 if (event.inventory != getInventory()) return
                 if (event.slot < 0) return
 
@@ -132,6 +138,7 @@ abstract class GenericGUI<T>(
 
             @EventHandler
             private fun onInventoryOpen(event: InventoryOpenEvent) {
+                Origin.log("Origin onInventoryOpen listener")
                 if (event.inventory != getInventory()) return
                 onOpenConsumer?.accept(event.player as? Player, event.inventory)
                 onOpen(event.player as Player, event.inventory)
@@ -139,11 +146,13 @@ abstract class GenericGUI<T>(
 
             @EventHandler
             private fun onInventoryClose(event: InventoryCloseEvent) {
+                Origin.log("Origin onInventoryClick listener")
                 if (event.inventory != getInventory()) return
                 onCloseConsumer?.accept(event.player as? Player, event.inventory)
                 onClose(event.player as Player, event.inventory)
             }
         }
+        Origin.log("Registering origin registerListener method")
         Origin.registerListener(listener)
     }
 

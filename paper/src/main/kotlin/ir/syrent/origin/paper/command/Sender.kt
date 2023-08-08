@@ -19,7 +19,7 @@ open class Sender(
         commandSender.sendMessage(ONLY_PLAYERS_MESSAGE)
         return null
     }
-
+ 
     override fun audience(): Audience {
         return Audience.audience(commandSender)
     }

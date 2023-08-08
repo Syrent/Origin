@@ -1,6 +1,5 @@
 package ir.syrent.origin.paper.gui
 
-import ir.syrent.origin.paper.Origin
 import org.bukkit.inventory.ItemStack
 import org.bukkit.util.Consumer
 
@@ -24,6 +23,5 @@ data class GUIItem<T>(
         onClickConsumer = consumer
         return this
     }
-
 
 }

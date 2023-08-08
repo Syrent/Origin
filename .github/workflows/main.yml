@@ -3,9 +3,7 @@ on:
   workflow_dispatch:
   release:
     types: [ created ]
-  push:
-    tags:
-      - '*'
+  push: {}
 
 jobs:
   publish:

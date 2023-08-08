@@ -34,12 +34,7 @@ abstract class GenericGUI<T>(
 ) : ExtendableGUI<T> {
 
     // The underlying inventory object
-    private val inventory =
-        if (type == InventoryType.CHEST) {
-            Bukkit.createInventory(owner, size, title)
-        } else {
-            Bukkit.createInventory(owner, type, title)
-        }
+    private val inventory = Bukkit.createInventory(owner, size, title)
 
     // A list of inventory items associated with the GUI
     private val items = mutableListOf<GUIItem<T>>()
@@ -92,25 +87,21 @@ abstract class GenericGUI<T>(
     private var onCloseConsumer: BiConsumer<Player?, Inventory>? = null
 
     override fun onOpen(consumer: BiConsumer<Player?, Inventory>): GenericGUI<T> {
-        Origin.log("Called onOpen consumer")
         onOpenConsumer = consumer
         return this
     }
 
     override fun onClick(consumer: BiConsumer<Player?, GUIItem<T>>): GenericGUI<T> {
-        Origin.log("Called onClick consumer")
         onClickConsumer = consumer
         return this
     }
 
     override fun onClose(consumer: BiConsumer<Player?, Inventory>): GenericGUI<T> {
-        Origin.log("Called onClose consumer")
         onCloseConsumer = consumer
         return this
     }
 
     override fun disableClick(disableClick: Boolean): GenericGUI<T> {
-        Origin.log("Called disableClick method")
         this.disableClick = disableClick
         return this
     }
@@ -119,26 +110,31 @@ abstract class GenericGUI<T>(
      * Registers the necessary event listeners for the GUI.
      */
     private fun registerListener() {
-        Origin.log("Registering listener")
         val listener = object : Listener {
             @EventHandler
             private fun onInventoryClick(event: InventoryClickEvent) {
-                Origin.log("Origin onInventoryClick listener")
-                if (event.inventory != getInventory()) return
+                Origin.log("Clicked")
+                if (event.inventory != inventory) return
+                Origin.log("Same inventory")
                 if (event.slot < 0) return
+                Origin.log("Slot is not smaller than 0 (slot: ${event.slot})")
+
 
                 var onClick = false
+                Origin.log("items: ${items}")
                 items.getOrNull(event.slot)?.let { inventoryItem ->
+                    Origin.log("Item is null on slot: ${event.slot}")
                     onClickConsumer?.accept(event.whoClicked as? Player, inventoryItem)
                     onClick = onClick(event.whoClicked as Player, inventoryItem, event.click)
                 }
+                Origin.log("disableClick: ${disableClick}")
+                Origin.log("onClick: ${onClick}")
 
-                event.isCancelled = disableClick && onClick
+                event.isCancelled = disableClick || onClick
             }
 
             @EventHandler
             private fun onInventoryOpen(event: InventoryOpenEvent) {
-                Origin.log("Origin onInventoryOpen listener")
                 if (event.inventory != getInventory()) return
                 onOpenConsumer?.accept(event.player as? Player, event.inventory)
                 onOpen(event.player as Player, event.inventory)
@@ -146,17 +142,15 @@ abstract class GenericGUI<T>(
 
             @EventHandler
             private fun onInventoryClose(event: InventoryCloseEvent) {
-                Origin.log("Origin onInventoryClick listener")
                 if (event.inventory != getInventory()) return
                 onCloseConsumer?.accept(event.player as? Player, event.inventory)
                 onClose(event.player as Player, event.inventory)
             }
         }
-        Origin.log("Registering origin registerListener method")
         Origin.registerListener(listener)
     }
 
     override fun getInventory(): Inventory {
-        return this.inventory
+        return inventory
     }
 }

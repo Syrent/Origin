@@ -51,9 +51,6 @@ allprojects {
         // Crunch
         implementation("com.github.Redempt:Crunch:1.1.3")
 
-        // Annotations (included in Spigot jar file)
-        compileOnly("org.jetbrains:annotations:23.0.0")
-
         // Maven
         implementation("org.apache.maven:maven-artifact:3.8.5")
     }

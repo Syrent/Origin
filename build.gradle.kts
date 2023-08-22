@@ -38,6 +38,7 @@ allprojects {
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://oss.sonatype.org/content/groups/public/")
         maven("https://jitpack.io")
+        maven("https://repo.maven.apache.org/maven2/")
 
         // Crunch
         maven("https://redempt.dev")

@@ -2,6 +2,7 @@ package ir.syrent.origin.paper.gui
 
 import ir.syrent.origin.paper.Origin
 import ir.syrent.origin.paper.gui.interfaces.ExtendableGUI
+import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -26,7 +27,7 @@ import java.util.function.BiConsumer
  * @param owner the inventory holder for the GUI (optional)
  */
 abstract class GenericGUI<T>(
-    val title: String,
+    val title: Component,
     val type: InventoryType = InventoryType.CHEST,
     val size: Int = 54,
     val owner: InventoryHolder? = null

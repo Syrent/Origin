@@ -17,8 +17,8 @@ dependencies {
     implementation("cloud.commandframework:cloud-paper:tooltips-SNAPSHOT")
     implementation("cloud.commandframework:cloud-minecraft-extras:tooltips-SNAPSHOT")
 
-    implementation("net.kyori:adventure-api:4.14.0")
-    implementation("net.kyori:adventure-text-minimessage:4.14.0")
+    compileOnly("net.kyori:adventure-api:4.14.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.14.0")
     implementation("net.kyori:adventure-platform-bukkit:4.3.0")
 }
 
@@ -30,7 +30,7 @@ tasks {
     shadowJar {
         archiveClassifier.set("")
         exclude("META-INF/**")
-        relocate("net.kyori", "ir.syrent")
+//        relocate("net.kyori", "ir.syrent")
     }
 
     runServer {

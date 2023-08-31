@@ -2,6 +2,7 @@ package ir.syrent.origin.paper.gui.wrappers
 
 import ir.syrent.origin.paper.gui.GUIItem
 import ir.syrent.origin.paper.gui.GenericGUI
+import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryType
@@ -19,7 +20,7 @@ import org.bukkit.inventory.InventoryHolder
  * @param owner the inventory holder for the GUI (optional)
  */
 open class WrappedGenericGUI<T>(
-    title: String,
+    title: Component,
     type: InventoryType = InventoryType.CHEST,
     size: Int = 54,
     owner: InventoryHolder? = null

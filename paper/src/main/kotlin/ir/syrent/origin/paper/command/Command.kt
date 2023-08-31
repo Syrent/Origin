@@ -1,9 +1,8 @@
 package ir.syrent.origin.paper.command
 
 import cloud.commandframework.ArgumentDescription
-import cloud.commandframework.CloudCapability
 import cloud.commandframework.Command
-import cloud.commandframework.arguments.StaticArgument
+import cloud.commandframework.bukkit.BukkitCommandManager
 import cloud.commandframework.execution.CommandExecutionCoordinator
 import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler
 import cloud.commandframework.minecraft.extras.MinecraftHelp
@@ -23,9 +22,9 @@ abstract class Command(
 
     var ERROR_PREFIX = "<dark_gray>[</dark_gray><dark_red><bold>✘</bold></dark_red><dark_gray>]</dark_gray><gradient:dark_red:red>"
 
-    lateinit var manager: PaperCommandManager<ISender>
-    lateinit var builder: Command.Builder<ISender>
-    lateinit var help: MinecraftHelp<ISender>
+    var manager: PaperCommandManager<ISender>
+    var builder: Command.Builder<ISender>
+    var help: MinecraftHelp<ISender>
 
     init {
         val senderMapper = { commandSender: CommandSender -> Sender(commandSender) }
@@ -41,7 +40,11 @@ abstract class Command(
 
         manager.createCommandHelpHandler()
 
-        manager.registerBrigadier()
+        try {
+            manager.registerBrigadier()
+        } catch (_: BukkitCommandManager.BrigadierFailureException) {
+            Origin.warn("Failed to enable mojang brigadier commands.")
+        }
 
         MinecraftExceptionHandler<ISender>()
             .withArgumentParsingHandler()
@@ -57,11 +60,6 @@ abstract class Command(
             audienceMapper,
             manager
         )
-
-        if (manager.hasCapability(CloudCapability.StandardCapabilities.ROOT_COMMAND_DELETION)) {
-            Origin.warn("Unregistering root command with name $name and aliases ${aliases.toList()} (You might need to restart server in order to take effect)")
-            manager.commandRegistrationHandler().unregisterRootCommand(StaticArgument.of<ISender>(name, *aliases))
-        }
 
         builder = manager.commandBuilder(name, *aliases).permission(getPermission(name))
     }

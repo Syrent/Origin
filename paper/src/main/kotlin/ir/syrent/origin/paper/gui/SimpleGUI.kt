@@ -1,6 +1,5 @@
 package ir.syrent.origin.paper.gui
 
-import net.kyori.adventure.text.Component
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
@@ -15,7 +14,7 @@ import org.bukkit.inventory.ItemStack
  * @param owner the inventory holder for the GUI (optional)
  */
 abstract class SimpleGUI(
-    title: Component,
+    title: String,
     type: InventoryType = InventoryType.CHEST,
     size: Int = 54,
     owner: InventoryHolder? = null

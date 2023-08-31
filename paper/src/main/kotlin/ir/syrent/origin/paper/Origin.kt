@@ -5,10 +5,9 @@ import org.bukkit.Bukkit
 import org.bukkit.Server
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
-import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitTask
 
-class Origin : JavaPlugin() {
+class Origin {
     companion object {
         private val recordedHasPluginSet = mutableSetOf<String>()
 
@@ -53,13 +52,13 @@ class Origin : JavaPlugin() {
         }
 
         @JvmStatic
-        fun getServer(): Server {
+        fun getTypedServer(): Server {
             return OriginPlugin.instance.server
         }
 
         @JvmStatic
         fun getOnlinePlayers(): Collection<Player> {
-            return getServer().onlinePlayers
+            return getTypedServer().onlinePlayers
         }
 
         @JvmStatic
@@ -85,7 +84,7 @@ class Origin : JavaPlugin() {
         @JvmStatic
         fun hasPlugin(plugin: String): Boolean {
             return if (recordedHasPluginSet.contains(plugin)) true else {
-                if (getServer().pluginManager.getPlugin(plugin) != null && getServer().pluginManager.isPluginEnabled(plugin)
+                if (getTypedServer().pluginManager.getPlugin(plugin) != null && getTypedServer().pluginManager.isPluginEnabled(plugin)
                 ) {
                     recordedHasPluginSet.add(plugin)
                     true

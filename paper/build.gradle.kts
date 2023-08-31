@@ -1,11 +1,10 @@
-import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 import java.net.URL
 import java.util.concurrent.Executors
 
 plugins {
     id("io.papermc.paperweight.userdev") version "1.5.5"
     id("xyz.jpenilla.run-paper") version "2.1.0"
-    id("net.minecrell.plugin-yml.paper") version "0.6.0"
+//    id("net.minecrell.plugin-yml.paper") version "0.6.0"
 }
 
 group = "ir.syrent"
@@ -15,10 +14,12 @@ description = "An experimental API for my minecraft stuff"
 dependencies {
     paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT")
 
+    implementation("cloud.commandframework:cloud-paper:tooltips-SNAPSHOT")
+    implementation("cloud.commandframework:cloud-minecraft-extras:tooltips-SNAPSHOT")
 
-    implementation("cloud.commandframework:cloud-paper:1.9.0-SNAPSHOT")
-    implementation("cloud.commandframework:cloud-minecraft-extras:1.9.0-SNAPSHOT")
-//    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
+    implementation("net.kyori:adventure-api:4.14.0")
+    implementation("net.kyori:adventure-text-minimessage:4.14.0")
+    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}
@@ -29,7 +30,7 @@ tasks {
     shadowJar {
         archiveClassifier.set("")
         exclude("META-INF/**")
-        minimize()
+        relocate("net.kyori", "ir.syrent")
     }
 
     runServer {
@@ -78,17 +79,4 @@ publishing {
     /*tasks.withType<PublishToMavenLocal> {
         dependsOn(":paper:shadowJar")
     }*/
-}
-
-paper {
-    name = "Origin-Paper"
-    main = "ir.syrent.origin.paper.Origin"
-    hasOpenClassloader = false
-    generateLibrariesJson = true
-    foliaSupported = true
-    apiVersion = "1.19"
-    load = BukkitPluginDescription.PluginLoadOrder.STARTUP
-    authors = listOf("Syrent")
-    prefix = "Origin-Paper"
-    defaultPermission = BukkitPluginDescription.Permission.Default.OP
 }

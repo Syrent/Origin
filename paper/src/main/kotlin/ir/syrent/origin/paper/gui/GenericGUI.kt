@@ -58,6 +58,7 @@ abstract class GenericGUI<T>(
 
     override fun setItem(item: GUIItem<T>): GenericGUI<T> {
         inventory.setItem(item.slot, item.itemStack)
+        items.removeIf { iItem -> iItem.slot == item.slot }
         items.add(item)
         return this
     }

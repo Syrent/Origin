@@ -1,5 +1,8 @@
 package ir.syrent.origin.paper
 
+import ir.syrent.origin.paper.utils.ComponentUtils.component
+import net.kyori.adventure.audience.Audience
+import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.Server
@@ -72,13 +75,28 @@ class Origin {
         }
 
         @JvmStatic
+        fun log(message: Component) {
+            Audience.audience(Bukkit.getConsoleSender()).sendMessage("<gray>[${getPlugin().name}] ".component().append("[INFO] ".component()).append(message))
+        }
+
+        @JvmStatic
         fun warn(message: String) {
             Bukkit.getLogger().warning(message)
         }
 
         @JvmStatic
+        fun warn(message: Component) {
+            Audience.audience(Bukkit.getConsoleSender()).sendMessage("<yellow>[${getPlugin().name}] ".component().append("[WARN] ".component()).append(message))
+        }
+
+        @JvmStatic
         fun error(message: String) {
             Bukkit.getLogger().severe(message)
+        }
+
+        @JvmStatic
+        fun error(message: Component) {
+            Audience.audience(Bukkit.getConsoleSender()).sendMessage("<dark_red>[${getPlugin().name}] ".component().append("[ERROR] ".component()).append(message))
         }
 
         @JvmStatic

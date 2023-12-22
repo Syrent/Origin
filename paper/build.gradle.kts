@@ -22,6 +22,9 @@ dependencies {
     implementation("cloud.commandframework:cloud-paper:2.0.0-SNAPSHOT")
     implementation("cloud.commandframework:cloud-annotations:2.0.0-SNAPSHOT")
     implementation("cloud.commandframework:cloud-minecraft-extras:2.0.0-SNAPSHOT")
+    implementation("cloud.commandframework:cloud-kotlin-extensions:2.0.0-SNAPSHOT")
+    implementation("cloud.commandframework:cloud-kotlin-coroutines:2.0.0-SNAPSHOT")
+    implementation("cloud.commandframework:cloud-kotlin-coroutines-annotations:2.0.0-SNAPSHOT")
 
     implementation("net.kyori:adventure-api:4.14.0")
     implementation("net.kyori:adventure-text-minimessage:4.14.0")

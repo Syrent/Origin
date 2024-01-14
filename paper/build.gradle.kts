@@ -35,7 +35,7 @@ tasks {
     shadowJar {
         archiveClassifier.set("")
         exclude("META-INF/**")
-        relocate("cloud.commandframework", "$relocatePrefix.cloud.commandframework")
+//        relocate("cloud.commandframework", "$relocatePrefix.cloud.commandframework")
     }
 
     runServer {

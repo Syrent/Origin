@@ -8,33 +8,33 @@ import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler
 import cloud.commandframework.minecraft.extras.MinecraftHelp
 import cloud.commandframework.paper.PaperCommandManager
 import ir.syrent.origin.paper.Origin
-import ir.syrent.origin.paper.command.interfaces.ICommand
-import ir.syrent.origin.paper.command.interfaces.ISender
+import ir.syrent.origin.paper.command.interfaces.CommandExtension
+import ir.syrent.origin.paper.command.interfaces.SenderExtension
 import ir.syrent.origin.paper.utils.ComponentUtils.component
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.text.Component
 import org.bukkit.command.CommandSender
 
-abstract class Command(
+abstract class OriginCommand(
     val name: String,
     vararg val aliases: String
-) : ICommand {
+) : CommandExtension {
 
-    var ERROR_PREFIX = "<dark_gray>[</dark_gray><dark_red><bold>✘</bold></dark_red><dark_gray>]</dark_gray><gradient:dark_red:red>"
+    private var errorPrefix = "<dark_gray>[</dark_gray><dark_red><bold>✘</bold></dark_red><dark_gray>]</dark_gray><gradient:dark_red:red>".component()
 
-    var manager: PaperCommandManager<ISender>
-    var builder: Command.Builder<ISender>
-    var help: MinecraftHelp<ISender>
+    var manager: PaperCommandManager<SenderExtension>
+    var builder: Command.Builder<SenderExtension>
+    var help: MinecraftHelp<SenderExtension>
 
     init {
-        val senderMapper = { commandSender: CommandSender -> Sender(commandSender) }
-        val backwardsMapper = { sayanSender: ISender -> sayanSender.getSender() }
-        val audienceMapper = { sayanSender: ISender -> Audience.audience(sayanSender.getSender()) }
+        val originSenderMapper = { commandSender: CommandSender -> OriginSenderExtension(commandSender) }
+        val backwardsMapper = { sayanSenderExtension: SenderExtension -> sayanSenderExtension.sender() }
+        val audienceMapper = { sayanSenderExtension: SenderExtension -> Audience.audience(sayanSenderExtension.sender()) }
 
         manager = PaperCommandManager(
             Origin.getPlugin(),
             CommandExecutionCoordinator.simpleCoordinator(),
-            senderMapper,
+            originSenderMapper,
             backwardsMapper
         )
 
@@ -47,13 +47,13 @@ abstract class Command(
             Origin.warn("Failed to enable mojang brigadier commands.")
         }
 
-        MinecraftExceptionHandler<ISender>()
+        MinecraftExceptionHandler<SenderExtension>()
             .withArgumentParsingHandler()
             .withInvalidSenderHandler()
             .withInvalidSyntaxHandler()
             .withNoPermissionHandler()
             .withCommandExecutionHandler()
-            .withDecorator { message -> ERROR_PREFIX.component().append(Component.space()).append(message) }
+            .withDecorator { message -> errorPrefix.append(Component.space()).append(message) }
             .apply(manager, audienceMapper)
 
         help = MinecraftHelp(
@@ -62,23 +62,27 @@ abstract class Command(
             manager
         )
 
-        builder = manager.commandBuilder(name, *aliases).permission(getPermission(name))
+        builder = manager.commandBuilder(name, *aliases).permission(constructBasePermission(name))
     }
 
-    fun addLiteral(name: String, description: ArgumentDescription? = null, vararg aliases: String): Command.Builder<ISender> {
+    fun addLiteral(name: String, description: ArgumentDescription? = null, vararg aliases: String): Command.Builder<SenderExtension> {
         return builder.literal(name, description ?: ArgumentDescription.empty(), *aliases)
     }
 
-    fun saveCommand(command: Command<ISender>) {
+    fun saveCommand(command: Command<SenderExtension>) {
         manager.command(command)
         manager.commandRegistrationHandler().registerCommand(command)
     }
 
-    fun saveCommand(commandBuilder: Command.Builder<ISender>) {
+    fun saveCommand(commandBuilder: Command.Builder<SenderExtension>) {
         saveCommand(commandBuilder.build())
     }
 
-    override fun setErrorPrefix(prefix: String) {
-        ERROR_PREFIX = prefix
+    override fun errorPrefix(): Component {
+        return errorPrefix
+    }
+
+    override fun errorPrefix(prefix: Component) {
+        errorPrefix = prefix
     }
 }

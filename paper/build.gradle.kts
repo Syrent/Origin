@@ -2,9 +2,8 @@ import java.net.URL
 import java.util.concurrent.Executors
 
 plugins {
-    id("io.papermc.paperweight.userdev") version "1.5.6"
-    id("xyz.jpenilla.run-paper") version "2.1.0"
-//    id("net.minecrell.plugin-yml.paper") version "0.6.0"
+    id("io.papermc.paperweight.userdev") version "1.5.11"
+    id("xyz.jpenilla.run-paper") version "2.2.2"
 }
 
 group = "ir.syrent"
@@ -16,8 +15,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.20.2-R0.1-SNAPSHOT")
-
+    paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
 
     implementation("cloud.commandframework:cloud-paper:2.0.0-SNAPSHOT")
     implementation("cloud.commandframework:cloud-annotations:2.0.0-SNAPSHOT")
@@ -25,26 +23,23 @@ dependencies {
     implementation("cloud.commandframework:cloud-kotlin-extensions:2.0.0-SNAPSHOT")
     implementation("cloud.commandframework:cloud-kotlin-coroutines:2.0.0-SNAPSHOT")
     implementation("cloud.commandframework:cloud-kotlin-coroutines-annotations:2.0.0-SNAPSHOT")
-
-    implementation("net.kyori:adventure-api:4.14.0")
-    implementation("net.kyori:adventure-text-minimessage:4.14.0")
-    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}
 
 val extraDependencies = emptyMap<String, String>()
 
+val relocatePrefix = "ir.syrent.origin.dependencies"
+
 tasks {
     shadowJar {
         archiveClassifier.set("")
         exclude("META-INF/**")
-//        relocate("net.kyori", "ir.syrent.net.kyori")
-//        relocate("cloud.commandframework", "ir.syrent.cloud.commandframework")
+        relocate("cloud.commandframework", "$relocatePrefix.cloud.commandframework")
     }
 
     runServer {
-        minecraftVersion("1.20.2")
+        minecraftVersion("1.20.4")
     }
 
     assemble {

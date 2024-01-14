@@ -1,39 +1,42 @@
 package ir.syrent.origin.paper.command
 
-import ir.syrent.origin.paper.command.interfaces.ISender
+import ir.syrent.origin.paper.command.interfaces.SenderExtension
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.minimessage.MiniMessage
+import net.kyori.adventure.text.format.TextColor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-open class Sender(
+open class OriginSenderExtension(
     private var commandSender: CommandSender
-): ISender {
+): SenderExtension {
 
-    var ONLY_PLAYERS_MESSAGE = MiniMessage.miniMessage().deserialize("<dark_gray>[</dark_gray><dark_red><bold>✘</bold></dark_red><dark_gray>]</dark_gray><gradient:dark_red:red> Only players can use this command.")
+    private var onlinePlayersMessage = Component.text("Only players can use this command.")
+        .color(TextColor.color(192, 32, 16))
+        .asComponent()
+
 
     override fun player(): Player? {
         if (commandSender is Player) return (commandSender as Player).player
 
-        commandSender.sendMessage(ONLY_PLAYERS_MESSAGE)
+        commandSender.sendMessage(onlinePlayersMessage)
         return null
     }
- 
+
     override fun audience(): Audience {
         return Audience.audience(commandSender)
     }
 
-    override fun setSender(sender: CommandSender) {
+    override fun sender(sender: CommandSender) {
         commandSender = sender
     }
 
-    override fun getSender(): CommandSender {
+    override fun sender(): CommandSender {
         return commandSender
     }
 
     override fun sentOnlyPlayersMessage(message: Component) {
-        ONLY_PLAYERS_MESSAGE = message
+        onlinePlayersMessage = message
     }
 
 }

@@ -5,7 +5,7 @@ import net.kyori.adventure.text.Component
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-interface ISender {
+interface SenderExtension {
 
     /**
      * Retrieves the player associated with the sender.
@@ -26,14 +26,14 @@ interface ISender {
      *
      * @param sender The command sender to set.
      */
-    fun setSender(sender: CommandSender)
+    fun sender(sender: CommandSender)
 
     /**
      * Retrieves the command sender associated with this sender instance.
      *
      * @return The command sender associated with this sender instance.
      */
-    fun getSender(): CommandSender
+    fun sender(): CommandSender
 
     /**
      * Sends a message to the sender if they are not a player.

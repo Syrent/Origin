@@ -1,6 +1,5 @@
 package ir.syrent.origin.paper.command
 
-import cloud.commandframework.ArgumentDescription
 import cloud.commandframework.Command
 import cloud.commandframework.bukkit.BukkitCommandManager
 import cloud.commandframework.execution.CommandExecutionCoordinator
@@ -63,19 +62,6 @@ abstract class OriginCommand(
         )
 
         builder = manager.commandBuilder(name, *aliases).permission(constructBasePermission(name))
-    }
-
-    fun addLiteral(name: String, description: ArgumentDescription? = null, vararg aliases: String): Command.Builder<SenderExtension> {
-        return builder.literal(name, description ?: ArgumentDescription.empty(), *aliases)
-    }
-
-    fun saveCommand(command: Command<SenderExtension>) {
-        manager.command(command)
-        manager.commandRegistrationHandler().registerCommand(command)
-    }
-
-    fun saveCommand(commandBuilder: Command.Builder<SenderExtension>) {
-        saveCommand(commandBuilder.build())
     }
 
     override fun errorPrefix(): Component {

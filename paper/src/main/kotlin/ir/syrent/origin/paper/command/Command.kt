@@ -1,8 +1,8 @@
 package ir.syrent.origin.paper.command
 
 import cloud.commandframework.Command
-import cloud.commandframework.bukkit.BukkitCommandManager
-import cloud.commandframework.execution.CommandExecutionCoordinator
+import cloud.commandframework.SenderMapper
+import cloud.commandframework.execution.ExecutionCoordinator
 import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler
 import cloud.commandframework.minecraft.extras.MinecraftHelp
 import cloud.commandframework.paper.PaperCommandManager
@@ -32,19 +32,13 @@ abstract class OriginCommand(
 
         manager = PaperCommandManager(
             Origin.getPlugin(),
-            CommandExecutionCoordinator.simpleCoordinator(),
-            originSenderMapper,
-            backwardsMapper
+            ExecutionCoordinator.simpleCoordinator(),
+            SenderMapper.create(originSenderMapper, backwardsMapper),
         )
 
-        manager.createCommandHelpHandler()
+        manager.createHelpHandler()
         manager.registerAsynchronousCompletions()
-
-        try {
-            manager.registerBrigadier()
-        } catch (_: BukkitCommandManager.BrigadierFailureException) {
-            Origin.warn("Failed to enable mojang brigadier commands.")
-        }
+        manager.registerBrigadier()
 
         MinecraftExceptionHandler<SenderExtension>()
             .withArgumentParsingHandler()

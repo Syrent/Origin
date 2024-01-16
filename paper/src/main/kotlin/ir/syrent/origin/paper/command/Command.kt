@@ -3,7 +3,6 @@ package ir.syrent.origin.paper.command
 import cloud.commandframework.Command
 import cloud.commandframework.SenderMapper
 import cloud.commandframework.execution.ExecutionCoordinator
-import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler
 import cloud.commandframework.minecraft.extras.MinecraftHelp
 import cloud.commandframework.paper.PaperCommandManager
 import ir.syrent.origin.paper.Origin
@@ -40,19 +39,10 @@ abstract class OriginCommand(
         manager.registerAsynchronousCompletions()
         manager.registerBrigadier()
 
-        MinecraftExceptionHandler<SenderExtension>()
-            .withArgumentParsingHandler()
-            .withInvalidSenderHandler()
-            .withInvalidSyntaxHandler()
-            .withNoPermissionHandler()
-            .withCommandExecutionHandler()
-            .withDecorator { message -> errorPrefix.append(Component.space()).append(message) }
-            .apply(manager, audienceMapper)
-
-        help = MinecraftHelp(
+        help = MinecraftHelp.create(
             "/${name} help",
-            audienceMapper,
-            manager
+            manager,
+            audienceMapper
         )
 
         builder = manager.commandBuilder(name, *aliases).permission(constructBasePermission(name))

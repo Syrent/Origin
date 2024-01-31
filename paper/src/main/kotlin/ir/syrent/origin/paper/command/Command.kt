@@ -1,10 +1,5 @@
 package ir.syrent.origin.paper.command
 
-import cloud.commandframework.Command
-import cloud.commandframework.SenderMapper
-import cloud.commandframework.execution.ExecutionCoordinator
-import cloud.commandframework.minecraft.extras.MinecraftHelp
-import cloud.commandframework.paper.PaperCommandManager
 import ir.syrent.origin.paper.Origin
 import ir.syrent.origin.paper.command.interfaces.CommandExtension
 import ir.syrent.origin.paper.command.interfaces.SenderExtension
@@ -12,6 +7,11 @@ import ir.syrent.origin.paper.utils.ComponentUtils.component
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.text.Component
 import org.bukkit.command.CommandSender
+import org.incendo.cloud.Command
+import org.incendo.cloud.SenderMapper
+import org.incendo.cloud.execution.ExecutionCoordinator
+import org.incendo.cloud.minecraft.extras.MinecraftHelp
+import org.incendo.cloud.paper.PaperCommandManager
 
 abstract class OriginCommand(
     val name: String,

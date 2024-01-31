@@ -35,9 +35,6 @@ allprojects {
         mavenLocal()
         mavenCentral()
 
-        // Cloud SNAPSHOT (Dev repository)
-        maven("https://repo.masmc05.dev/repository/maven-snapshots/")
-
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://oss.sonatype.org/content/groups/public/")
         maven("https://jitpack.io")

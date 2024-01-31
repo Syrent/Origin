@@ -15,7 +15,6 @@ open class OriginSenderExtension(
         .color(TextColor.color(192, 32, 16))
         .asComponent()
 
-
     override fun player(): Player? {
         if (commandSender is Player) return (commandSender as Player).player
 

@@ -17,13 +17,10 @@ repositories {
 dependencies {
     paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
 
-    implementation("cloud.commandframework:cloud-core:2.0.0-SNAPSHOT")
-    implementation("cloud.commandframework:cloud-paper:2.0.0-SNAPSHOT")
-    implementation("cloud.commandframework:cloud-annotations:2.0.0-SNAPSHOT")
-    implementation("cloud.commandframework:cloud-minecraft-extras:2.0.0-SNAPSHOT")
-    implementation("cloud.commandframework:cloud-kotlin-extensions:2.0.0-SNAPSHOT")
-    implementation("cloud.commandframework:cloud-kotlin-coroutines:2.0.0-SNAPSHOT")
-    implementation("cloud.commandframework:cloud-kotlin-coroutines-annotations:2.0.0-SNAPSHOT")
+    implementation("org.incendo:cloud-core:2.0.0-SNAPSHOT")
+    implementation("org.incendo:cloud-paper:2.0.0-SNAPSHOT")
+    implementation("org.incendo:cloud-minecraft-extras:2.0.0-SNAPSHOT")
+    implementation("org.incendo:cloud-kotlin-extensions:2.0.0-SNAPSHOT")
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}

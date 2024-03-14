@@ -1,6 +1,5 @@
 package ir.syrent.origin.paper.item.interfaces
 
-import net.kyori.adventure.text.Component
 import org.bukkit.event.block.Action
 import org.bukkit.inventory.ItemStack
 import java.util.function.BiConsumer
@@ -12,9 +11,6 @@ import java.util.function.Consumer
  * @param T the type of data associated with the item
  */
 interface IItem<T> {
-
-    val displayname: Component
-    val lore: Collection<Component>
 
     /**
      * Sets a consumer function to be called when the item is used by a player.
@@ -51,13 +47,5 @@ interface IItem<T> {
      * @return the OriginItemInterface instance for method chaining
      */
     fun onAction(action: Action, consumer: BiConsumer<ItemStack, T?>): IItem<T>
-
-    fun displayname()
-
-    fun displayname(displayname: Component)
-
-    fun lore()
-
-    fun lore(lore: Collection<Component>)
 
 }

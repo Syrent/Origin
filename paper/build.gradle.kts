@@ -21,6 +21,10 @@ dependencies {
     implementation("org.incendo:cloud-paper:2.0.0-SNAPSHOT")
     implementation("org.incendo:cloud-minecraft-extras:2.0.0-SNAPSHOT")
     implementation("org.incendo:cloud-kotlin-extensions:2.0.0-SNAPSHOT")
+
+    implementation("net.kyori:adventure-text-minimessage:4.16.0")
+    implementation("net.kyori:adventure-api:4.16.0")
+    implementation("net.kyori:adventure-platform-bukkit:4.3.2")
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}

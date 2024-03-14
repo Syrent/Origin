@@ -34,6 +34,7 @@ tasks {
         archiveClassifier.set("")
         exclude("META-INF/**")
         relocate("cloud.commandframework", "$relocatePrefix.cloud.commandframework")
+        relocate("net.kyori", "$relocatePrefix.net.keyori")
     }
 
     runServer {

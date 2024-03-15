@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender
 import org.incendo.cloud.Command
 import org.incendo.cloud.SenderMapper
 import org.incendo.cloud.execution.ExecutionCoordinator
+import org.incendo.cloud.minecraft.extras.MinecraftExceptionHandler
 import org.incendo.cloud.minecraft.extras.MinecraftHelp
 import org.incendo.cloud.paper.PaperCommandManager
 
@@ -23,6 +24,7 @@ abstract class OriginCommand(
     var manager: PaperCommandManager<SenderExtension>
     var builder: Command.Builder<SenderExtension>
     var help: MinecraftHelp<SenderExtension>
+    var exceptionHandler: MinecraftExceptionHandler<SenderExtension>
 
     init {
         val originSenderMapper = { commandSender: CommandSender -> OriginSenderExtension(commandSender) }
@@ -34,6 +36,8 @@ abstract class OriginCommand(
             ExecutionCoordinator.simpleCoordinator(),
             SenderMapper.create(originSenderMapper, backwardsMapper),
         )
+
+        exceptionHandler = MinecraftExceptionHandler.create(audienceMapper)
 
         manager.createHelpHandler()
         manager.registerAsynchronousCompletions()

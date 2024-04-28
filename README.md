@@ -1,4 +1,4 @@
-# DISCONTINUED IN FAVOR OF [STICKYNOTE](https://github.com/Sayan-Development/StickyNote)
+# ⚠️⚠️⚠️ DISCONTINUED IN FAVOR OF [STICKYNOTE](https://github.com/Sayan-Development/StickyNote) ⚠️⚠️⚠️
 
 # Origin - Minecraft API/Framework
 

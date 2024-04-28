@@ -1,3 +1,5 @@
+# DISCONTINUED IN FAVOR OF [STICKYNOTE](https://github.com/Sayan-Development/StickyNote)
+
 # Origin - Minecraft API/Framework
 
 Origin is a comprehensive Minecraft API/Framework that provides a wide range of features and utilities to streamline your Minecraft plugin development process. It is designed to work with the latest version of Minecraft using the Paper API.
